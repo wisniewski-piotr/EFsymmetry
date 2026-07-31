@@ -5,6 +5,13 @@ import numpy as np
 
 # ### Define Your Electric Field
 
+def set_sym_tolerance( tol ):
+    global sym_tolerance
+    sym_tolerance = tol
+    
+set_sym_tolerance( 1e-8 )
+
+
 sym_waves_definitions = [ ]
 
 def reset_wave():
@@ -23,7 +30,12 @@ def add_wave( E1 , s1 , ϕ1, E2, s2, ϕ2 ):
     Adds a wave Ex=E1 * Sin( s1 * omega * t + ϕ1 ) , Ey=E2 * Sin( s2 * omega * t + ϕ2 ) to the electric field
     -------------------------------------------------------------------------------
     """
-    sym_waves_definitions.append( [ E1 , s1 , ϕ1 , E2 , s2 , ϕ2 ] )
+    if abs( s1 - round( s1 ) ) < sym_tolerance and abs( s2 - round( s2 ) ) < sym_tolerance:
+        sym_waves_definitions.append( [ E1 , s1 , ϕ1 , E2 , s2 , ϕ2 ] )
+    else:
+        print("!!! B and E in add_wave(A,B,C,D,E,F) must be integers\n" + 
+              "harmonics must be integers to make the field both commensurate and to make its cycle period equal sym.cycle_period")
+        assert False
 
 def _EFCalc(t):  # Electric field value calculation; used to confirm extrema and zero crossings locations as valid
     """
@@ -75,10 +87,6 @@ window_centers_locs = []
 base_window_definitions = []
 timespace            = None
 
-def set_sym_tolerance( tol ):
-    global sym_tolerance
-    sym_tolerance = tol
-
 def set_cycle_period( cp ):
     global cycle_period
     global omega
@@ -99,7 +107,6 @@ def set_omega( w ):
     set_cycle_period( None if w is None else 2 * np.pi / w )
 
 set_omega( None )
-set_sym_tolerance( 1e-8 )
 
 def _set_ExCr( list1 , list2 ):
     if omega is None or cycle_period is None or timespace is None:
@@ -388,7 +395,7 @@ def _ApplySymmetryOperators( nextlist , tlist_operators , blockReflection = True
                             if append_counter == len( sym_tlist ):
                                 sym_tlist.append( [ t[ 0 ] , t[ 1 ] , t[ 2 ] , t[ 3 ] ] )
                                 reflect_counter += 1
-                                if reflect_counter >= 1000: # not 1000 or more reflections, in case the field is incommensurate
+                                if reflect_counter >= 1000: # not 1000 or more reflections
                                     print("!!!  REFLECTION LIMIT REACHED")
                                     return False # crash the programme
             nextlist = []
@@ -431,13 +438,7 @@ def _ApplySymmetryOperators( nextlist , tlist_operators , blockReflection = True
 
 # ### Testing for symmetries
 
-def IsCommensurate():
-    if not test( translate( cycle_period , syminput( timespace ) ) ):
-        return False
-    else:
-        return True
-
-def _TestSym( inputlist ):
+def test( inputlist ):
     """
     test( inputlist )
 
@@ -460,7 +461,6 @@ def _TestSym( inputlist ):
 
     -------------
     Example:  test( syminput( timespace ) ) always returns True, as no operators are applied.
-              test( translate( cycle_period , syminput( timespace ) ) ) tests for field commensurability.
               test( invert( translate( cycle_period / 2 , syminput( timespace ) ) ) ) tests for half-cycle symmetry.
 
     -------------------------------------------------------------------------------
@@ -501,13 +501,6 @@ def _TestSym( inputlist ):
         return True
     else:
         return False
-
-def test( inputlist ):
-    if not _TestSym( translate( cycle_period , syminput( timespace ) ) ):
-        print("!!! The field is INCOMMENSURATE\nThis breaks the programme\nProceed at your own risk\n\n" + 
-              "Incommensurate means that translation by cycle_period does NOT yield the same field.")
-        assert False
-    return _TestSym( inputlist )
 
 def expand( initList , inputlist ):
     """
@@ -562,7 +555,7 @@ def expand( initList , inputlist ):
             shouldthiscodecontinue = False
         continue_counter +=1
         if continue_counter >= 100:
-            print("!!! This code should not continue for 100 times over!\nField incommensurate?")
+            print("!!! This code should not continue for 100 times over!")
             assert False
 
     working_initList.sort()
@@ -704,7 +697,7 @@ def _ApplySymmetryOperatorsComp( nextlist_raw , tlist_operators , blockReflectio
                             if append_counter == len( sym_tlist ):
                                 sym_tlist.append( [ t[ 0 ] , t[ 1 ] , t[ 2 ] , t[ 3 ] , t[ 4 ] ] )
                                 reflect_counter += 1
-                                if reflect_counter >= 1000: # not 1000 or more reflections, in case the field is incommensurate
+                                if reflect_counter >= 1000: # not 1000 or more reflections
                                     print("!!!  REFLECTION LIMIT REACHED")
                                     return False # crash the programme
             nextlist = []
@@ -798,7 +791,7 @@ def expand_complex( initListComp , inputlist ):
             shouldthiscodecontinue = False
         continue_counter +=1
         if continue_counter >= 100:
-            print("!!! This code should not continue for 100 times over!\nField incommensurate?")
+            print("!!! This code should not continue for 100 times over!")
             assert False
 
     complex_working_initList = []
