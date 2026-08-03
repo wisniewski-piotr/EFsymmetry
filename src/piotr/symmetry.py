@@ -1,9 +1,5 @@
-#!/usr/bin/env python
-
 import random
 import numpy as np
-
-# ### Define Your Electric Field
 
 def set_sym_tolerance( tol ):
     global sym_tolerance
@@ -11,75 +7,6 @@ def set_sym_tolerance( tol ):
     
 set_sym_tolerance( 1e-8 )
 
-
-sym_waves_definitions = [ ]
-
-def reset_wave():
-    """
-    reset_wave()
-
-    resets the shape of the electric field (to Ex=0 , Ey = 0)
-    -------------------------------------------------------------------------------
-    """
-    sym_waves_definitions.clear()
-
-def add_wave( E1 , s1 , ϕ1, E2, s2, ϕ2 ):
-    """
-    add_wave( E1 , s1 , ϕ1, E2, s2, ϕ2 )
-
-    Adds a wave Ex=E1 * Sin( s1 * omega * t + ϕ1 ) , Ey=E2 * Sin( s2 * omega * t + ϕ2 ) to the electric field
-    -------------------------------------------------------------------------------
-    """
-    if abs( s1 - round( s1 ) ) < sym_tolerance and abs( s2 - round( s2 ) ) < sym_tolerance:
-        sym_waves_definitions.append( [ E1 , s1 , ϕ1 , E2 , s2 , ϕ2 ] )
-    else:
-        print("!!! B and E in add_wave(A,B,C,D,E,F) must be integers\n" + 
-              "harmonics must be integers to make the field both commensurate and to make its cycle period equal sym.cycle_period")
-        assert False
-
-def _EFCalc(t):  # Electric field value calculation; used to confirm extrema and zero crossings locations as valid
-    """
-    _EFCalc(t)
-
-    Calculates the electric field value at time t, and returns it as a numpy array
-    -------------------------------------------------------------------------------
-    """
-    EleField = np.zeros( 2 )
-    for i in sym_waves_definitions:
-        EleField = EleField + np.array( [ i[ 0 ] * np.sin( i[ 1 ] * omega * t + i[ 2 ] ) 
-                                           , i[ 3 ] * np.sin( i[ 4 ] * omega * t + i[ 5 ] ) ] )
-    return EleField
-
-def _CEFCalc(t):  # Complex-form Electric field value calculation; used in test(), uses _EFCalc()
-    """
-    _CEFCalc(t)
-
-    Calculates the electric field value at time t, and returns it as a complex number
-    -------------------------------------------------------------------------------
-    """
-    EleField = _EFCalc(t)
-    ComplexFormEleField = EleField[ 0 ] + 1j * EleField[ 1 ]
-    return ComplexFormEleField
-
-def _EFGrad(t):  # Gradient of the electric field
-    """
-    _EFGrad(t)
-
-    Calculates the electric field gradient's value at time t, and returns it as a numpy array
-    -------------------------------------------------------------------------------
-    """
-    EleFieldGrad = np.zeros( 2 )
-    for i in sym_waves_definitions:
-        EleFieldGrad = EleFieldGrad + np.array( [ i[ 0 ] * i[ 1 ] * omega * np.cos( i[ 1 ] * omega * t + i[ 2 ] ) ,
-                                        i[ 3 ] * i[ 4 ] * omega * np.cos( i[ 4 ] * omega * t + i[ 5 ] ) ] )
-    return EleFieldGrad
-
-
-# #### Type in your values
-# ##### add_wave(A, B, C, D, E, F) --> adds "[ A sin(B w t + C) , D sin(E w t + F) ]" to the Electric field; C is in radians
-# ##### The comma in the middle separates the x-component of the field (A, B, C) from the y-component (D, E, F)
-# #####
-# ##### w is "omega" defined in the first notebook cell
 
 zero_crossings_locs  = []
 extrema_locs         = []
@@ -108,6 +35,84 @@ def set_omega( w ):
 
 set_omega( None )
 
+
+sym_waves_definitions = [ ]
+
+def reset_wave():
+    """
+    reset_wave()
+
+    resets the shape of the field (to Ex=0 , Ey = 0)
+    -------------------------------------------------------------------------------
+    """
+    sym_waves_definitions.clear()
+
+def add_wave( E1 , s1 , ϕ1, E2, s2, ϕ2 ):
+    """
+    add_wave( E1 , s1 , ϕ1, E2, s2, ϕ2 )
+
+    Adds a wave Ex=E1 * Sin( s1 * omega * t + ϕ1 ) , Ey=E2 * Sin( s2 * omega * t + ϕ2 ) to the field
+
+    The field can either be the electric field E, or the vector potential A
+    -------------------------------------------------------------------------------
+    """
+    if abs( s1 - round( s1 ) ) < sym_tolerance and abs( s2 - round( s2 ) ) < sym_tolerance:
+        sym_waves_definitions.append( [ E1 , s1 , ϕ1 , E2 , s2 , ϕ2 ] )
+    else:
+        print("!!! B and E in add_wave(A,B,C,D,E,F) must be integers\n" + 
+              "harmonics must be integers to make the field both commensurate and to make its cycle period equal sym.cycle_period\n" + 
+              "'Commensurate' means approximately 'periodic with the period of set_cycle_period' ( check via symmetry.cycle_period )")
+        assert False
+
+def _EFCalc(t):  # field value calculation; used to confirm extrema and zero crossings locations as valid
+    """
+    _EFCalc(t)
+
+    Calculates the field value at time t, and returns it as a numpy array
+
+    The field can either be the electric field E, or the vector potential A
+    -------------------------------------------------------------------------------
+    """
+    if omega is None or cycle_period is None or timespace is None:
+        print("!!! You must first set a cycle period (set_cycle_period(T)) or angular frequency (set_omega(w))")
+        assert False
+    EleField = np.zeros( 2 )
+    for i in sym_waves_definitions:
+        EleField = EleField + np.array( [ i[ 0 ] * np.sin( i[ 1 ] * omega * t + i[ 2 ] ),
+                                          i[ 3 ] * np.sin( i[ 4 ] * omega * t + i[ 5 ] ) ] )
+    return EleField
+
+def _CEFCalc(t):  # Complex-form field value calculation; used in test(), uses _EFCalc()
+    """
+    _CEFCalc(t)
+
+    Calculates the field value at time t, and returns it as a complex number
+
+    The field can either be the electric field E, or the vector potential A
+    -------------------------------------------------------------------------------
+    """
+    EleField = _EFCalc(t)
+    ComplexFormEleField = EleField[ 0 ] + 1j * EleField[ 1 ]
+    return ComplexFormEleField
+
+def _EFGrad(t):  # Gradient of the field
+    """
+    _EFGrad(t)
+
+    Calculates the field gradient's value at time t, and returns it as a numpy array
+
+    The field can either be the electric field E, or the vector potential A
+    -------------------------------------------------------------------------------
+    """
+    if omega is None or cycle_period is None or timespace is None:
+        print("!!! You must first set a cycle period (set_cycle_period(T)) or angular frequency (set_omega(w))")
+        assert False
+    EleFieldGrad = np.zeros( 2 )
+    for i in sym_waves_definitions:
+        EleFieldGrad = EleFieldGrad + np.array( [ i[ 0 ] * i[ 1 ] * omega * np.cos( i[ 1 ] * omega * t + i[ 2 ] ) ,
+                                                      i[ 3 ] * i[ 4 ] * omega * np.cos( i[ 4 ] * omega * t + i[ 5 ] ) ] )
+    return EleFieldGrad
+
 def _set_ExCr( list1 , list2 ):
     if omega is None or cycle_period is None or timespace is None:
         print("!!! You must first set a cycle period (set_cycle_period(T)) or angular frequency (set_omega(w))")
@@ -115,7 +120,7 @@ def _set_ExCr( list1 , list2 ):
     if type(list1) == list or type(list1) == np.ndarray:
         source = list( list1 )
     else:
-        print("The syminput of set_extrema() must be a list of different points in time between 0 and the cycle period")
+        print("The input must be a list of different points in time between 0 and the cycle period")
         assert False
     list2.clear()
     for i in source:
@@ -170,8 +175,6 @@ def set_base_window_definitions( list1 ):
     base_window_definitions = []
     for i in window_centers_locs:
         base_window_definitions.append( { "center": i , "width": cycle_period / (2 * len( window_centers_locs ) ) } )
-
-# ### Symmetry Operators
 
 def syminput( tlist_original = None , operatorlist = None ):
     """
@@ -308,7 +311,7 @@ def time_refl( sym_reflectlist , inputlist ):
     Yes, time reflection nested inside a time reflection is not supported (and is equivalent to translation anyways).
 
     -------------
-    Adds [ "Time Reflect" , sym_reflect ] to the operatorlist ( check out the documentation of syminput() )
+    Adds [ "Time Reflect" , sym_reflectlist ] to the operatorlist ( check out the documentation of syminput() )
     -------------------------------------------------------------------------------
     """
     inputlist[ 1 ].append( [ "Time Reflect" , sym_reflectlist ] )
@@ -436,8 +439,6 @@ def _ApplySymmetryOperators( nextlist , tlist_operators , blockReflection = True
             assert False
     return nextlist
 
-# ### Testing for symmetries
-
 def test( inputlist ):
     """
     test( inputlist )
@@ -454,7 +455,7 @@ def test( inputlist ):
     nextlist is in the format of syminput(), and it is modified by _ApplySymmetryOperators(),
     according to instructions in operatorlist, to create tlist_modified.
 
-    test() then compares, via _CEFCalc(), whether the electric field is the same, for each point in nextlist, as
+    test() then compares, via _CEFCalc(), whether the field is the same, for each point in nextlist, as
     it is in tlist_modified for all the other points with that same index ( check out syminput() documentation ), aka.
     for all the points that came from operating on that original point in nextlist via operators in operatorlist.
     There can be many such points because of time_refl.
@@ -754,7 +755,7 @@ def expand_complex( initListComp , inputlist ):
     this is NOT guaranteed to give you all the maxima/minima/zero-crossings/window centers of the field.
 
     -------------
-    Example:  expand( extrema_locs , invert( translate( cycle_period / 2 , syminput( timespace ) ) ) ) tests for
+    Example:  expand_complex( extrema_locs , invert( translate( cycle_period / 2 , syminput( timespace ) ) ) ) tests for
     half-cycle symmetry across timespace, and if it finds it, it takes all the time points in extrema_locs
     ( presumably all the extrema locations from 0 to cycle_period ) and uses the half-cycle symmetry to find
     more extrema if possible ( by translating by cycle_period / 2 ).
