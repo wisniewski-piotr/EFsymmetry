@@ -5,8 +5,8 @@
 ##### The decisions about the code's final state were independently reasoned by the author.
 
 ### <u>Requirements:</u>
-#### -$\textbf{NumPy}$
-#### -$\textbf{Python 3.9+}$
+#### -$$\textbf{NumPy}$$
+#### -$$\textbf{Python 3.9}+$$
 
 ### <u>Installation:</u>
 #### In the terminal, inside your virtual environment:
@@ -50,14 +50,17 @@
 #### `sym.rotate( radians , inputlist )` - appends a Field Rotation operator, by 'radians', to inputlist.
 #### `sym.invert( inputlist )` - appends a Field Inversion operator to inputlist (encoding a pi radians rotation).
 #### `sym.field_refl( radians, inputlist )` - appends a Field Reflection operator, about the axis you get by rotating the x-axis counterclockwise by 'radians', to inputlist.
-#### `sym.time_refl( sym_reflectlist , inputlist )` - appends a Time Reflection symmetry operator, as defined in sym_reflectlist, to inputlist. More on sym_reflectlist in the Technical Explanations section at the bottom of this page.
+#### `sym.time_refl( sym_reflectlist , inputlist )` - appends a Time Reflection symmetry operator, as defined in sym_reflectlist, to inputlist. More on sym_reflectlist in the Technical Explanations section at the bottom of this page (it's long).
 #### `sym.test( inputlist )` - tests whether the field has the same value, for each time in the original list supplied to sym.syminput, after that point in time is transformed through the operators appended to inputlist.
 #### `sym.expand( initList , inputlist )` - verifies the symmetry supplied in inputlist, and then uses it to find more points with the same field values starting with the points in initList. For example, initList can contain an extremum, and the function will find more extrema if they're revealed by this symmetry.
 #### `sym.ex_cr( inputlist )` - does the above automatically, using sym.extrema_locs and sym.zero_crossings_locs as inputs.
 ####
 ### For a PINN with windowed parametrisation:
 #### `sym.set_window_centers_locs( list )` - sets the locations of window centers (fills sym.window_centers_locs and sym.base_window_definitions).
-#### `sym.set_base_window_definitions( list )` - sets window centers, except in a format { "center" : T , "width" : L } (fills sym.base_window_definitions and sym.window_centers_locs)
+#### `sym.set_base_window_definitions( list )` - sets window centers (fills sym.base_window_definitions and sym.window_centers_locs), except in a format:
+```python
+{ "center" : location , "width" : width }
+```
 #### `sym.window_centers( inputlist )` - uses sym.expand to expand the list of window centers.
 #### !!! ATTENTION: The above commands do NOT keep window center widths unchanged.
 #### They are all set to cycle_period / (2 * N_window_centers)
@@ -83,7 +86,7 @@ sym.test( sym.rotate( 2 * np.pi / 3 , sym.translate( cycle_period / 3 , sym.symi
 ```
 ##
 ## <u>Validation</u>
-#### For (ω,n*ω) counter-rotating bicircular field, the (n+1)-fold rotation followed by a cycle_period / (n+1) translation symmetry has been observed for fields where n = 2, 3, or 4.
+#### For (ω,nω) counter-rotating bicircular field, the (n+1)-fold rotation followed by a cycle_period / (n+1) translation symmetry has been observed for fields where n = 2, 3, or 4.
 #### For those same fields, Claude derived the fact that there are 2(n+1) time-reflection axes at τ = mT/(2(n+1)), each carrying a field reflection with e^(2iα) = e^(2πim/(n+1)).
 #### All of those were verified by my code for n = 2, 3, and 4, for all values of m. Each of those fields also rejects the other two's reflection axes (correctly) - this is to mean that the field (ω,2ω) rejects the time-reflection axes of (ω,3ω) and (ω,4ω).
 #####
