@@ -5,8 +5,8 @@
 ##### The decisions about the code's final state were independently reasoned by the author.
 
 ### <u>Requirements:</u>
-#### -$$\textbf{NumPy}$$
-#### -$$\textbf{Python 3.9}+$$
+#### $\textbf{-NumPy}$
+#### $\textbf{-Python 3.9}+$
 
 ### <u>Installation:</u>
 #### In the terminal, inside your virtual environment:
