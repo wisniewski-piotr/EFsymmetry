@@ -3,7 +3,7 @@
 
 <u>Author:</u> Piotr Wisniewski, 2026 (studying at UCL at this time)
 
-Coding overseen by UCLAtto's Carla Figueira de Morisson Faria, Jiakang Chen, and Sufia Hashim during an internship there.
+Coding overseen by UCLAtto's Prof. Carla Figueira de Morisson Faria, Dr. Jiakang Chen, and Dr. Sufia Hashim during an internship there.
 
 AI-Assisted coding (Claude). AI used primarily in an assistive role (spotting mistakes, discussing concepts, suggesting ideas).
 
