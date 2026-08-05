@@ -369,11 +369,8 @@ Contributions are welcome - feel free to open a pull request.
 
 <u>Areas that would be particularly useful if added:</u>
 
-- **Complex-time saddle expansion.** `sym.expand_complex` currently carries the
-  imaginary part through untouched. Establishing the correct transformation
-  (see Rook & Faria, *J. Phys. B* **55** 165601 (2022), Sec. 3.2) would let the
-  module transport saddle times as well as real ones.
-- **Window widths.** Currently a geometric placeholder, `cycle_period / (2N)`.
-- **Incommensurate field support.** Few-cycle pulses would be especially useful.
+- **Complex-time saddle expansion.** `sym.expand_complex` currently doesn't change the imaginary component. Adding support for expanding complex-time saddles would prove useful (see Rook & Faria, *J. Phys. B* **55** 165601 (2022), Sec. 3.2).
+- **Window widths.** Currently always set to `cycle_period / (2N)`.
+- **Incommensurate field support.** Few-cycle pulse support.
 
 Please accompany code changes with documentation, update the README where appropriate, and make sure the `check.py` file still runs fine. For questions, bugs, or suggestions, open an issue on GitHub.
