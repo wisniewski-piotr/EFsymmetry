@@ -36,7 +36,8 @@ two-dimensional laser fields*. https://doi.org/10.5281/zenodo.21807953
 ### <u>Uninstall:</u>
 #### In the terminal, inside your virtual environment:
 #### `pip uninstall EFsymmetry`
-#
+####
+####
 ## <u>Description:</u>
 #### This Python module is intended to be used to detect electric (or vector potential) field symmetries, and was created with strong-field physics in mind.
 #### Electric field has different symmetries to vector potential, by the way.
@@ -44,7 +45,7 @@ two-dimensional laser fields*. https://doi.org/10.5281/zenodo.21807953
 #### Upon detecting a symmetry, it can also be used to expand a set of points (e.g., of field extrema) beyond what's currently given, using the said field symmetries. 
 #### IMPORTANT: This symmetry-based approach is helpful, but it can't always detect all the extrema (or such points), and whether it can is conditional on the particular symmetry (and thus the shape of the field).
 #####
-### <u>Current Limitations:</u>
+## <u>Current Limitations:</u>
 #### -The code can only accept commensurate (periodic) fields
 #### -The code can only reflect real times (not complex saddle times) about the said symmetries
 #### -Given windowed parametrisation for a PINN, window widths are a placeholder and not able to be calculated by this code.
@@ -87,8 +88,8 @@ two-dimensional laser fields*. https://doi.org/10.5281/zenodo.21807953
 ### Additional Functions
 #### `sym.set_sym_tolerance( tol )` - sets the tolerance used in all symmetry-related calculations (default: 1e-8)
 #### `sym.expand_complex( initList , inputlist )` - the same thing as sym.expand, except this one takes in imaginary values but doesn't change them throughout the calculations. It is a first step towards making the code able to expand complex-time saddle lists.
-##
-### <u>Example:</u>
+###
+## <u>Example:</u>
 ```python
 import numpy as np
 from piotr import symmetry as sym
@@ -120,7 +121,7 @@ sym.test( sym.rotate( 2 * np.pi / 3 , sym.translate( cycle_period / 3 , sym.symi
 ####
 #### The second list is the operatorlist - this is where all the operators appended to this inputlist are stored.
 #### The operatorlist is empty by default, and it can be passed to sym.syminput() as a second argument.
-##
+####
 #### The first list is the nextlist. It contains more lists.
 #### In the 2nd slot (slot_index: 1, as the first slot has slot_index of 0) of each such list is the individual time.
 #####
@@ -168,8 +169,8 @@ sym.rotate( np.pi / 3 , sym.syminput( [ sym.cycle_period / 6 ] ) ) ]
 ```
 #### signifies a time reflection symmetry about extrema, anti-symmetry about zero-crossings, and a time reflection about the point in time equal sym.cycle_period / 6 followed by field rotation of np.pi/3 symmetry.
 #### IMPORTANT: sym.time_refl's sym_reflectlist can have any combination of any operators nested within it, provided none of those operators are themselves sym.time_refl. Nesting time reflection inside time reflection isn't supported (and is equivalent to translation).
-##
-### <u>Internal Functions</u>
+###
+## <u>Internal Functions</u>
 #### `sym._EFCalc( t )` - calculates the field value in the x- and y-axes, in the form of a NumPy array, for the field defined using sym.add_wave, at time t, assuming no field rotations, field inversions, or field reflections were applied.
 #### `sym._CEFCalc( t )` - literally uses `sym._EFCalc( t )` internally, then converts from a NumPy array to a complex number.
 #### `sym._EFGrad( t )` - similar to `sym._EFCalc( t )`, except it calculates the field's gradient instead of its value/shape.
