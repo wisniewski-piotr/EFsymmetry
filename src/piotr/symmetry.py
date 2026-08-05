@@ -125,7 +125,7 @@ def _set_ExCr( list1 , list2 ):
     list2.clear()
     for i in source:
         if all( min( ( j - i ) % cycle_period , ( cycle_period - ( j - i ) ) % cycle_period ) > sym_tolerance for j in list2):
-            list2.append( i )
+            list2.append( i % cycle_period )
 
 def set_extrema_locs( list1 ):
     global extrema_locs

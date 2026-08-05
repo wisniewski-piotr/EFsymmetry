@@ -1,12 +1,31 @@
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21807953.svg)](https://doi.org/10.5281/zenodo.21807953)
 # Symmetry Detector
 ##### <u>Author:</u> Piotr Wisniewski, 2026 (studying at UCL at this time)
 ##### Coding overseen by UCLAtto's Carla Figueira de Morisson Faria, Jiakang Chen, and Sufia Hashim during an internship there.
 ##### AI-Assisted coding (Claude). AI used primarily in an assistive role (spotting mistakes, discussing concepts, suggesting ideas).
 ##### The decisions about the code's final state were independently reasoned by the author.
 
+## Citing
+
+If you use this module in published work, please cite it as:
+
+Wisniewski, P. (2026). *EFsymmetry: symmetry detection for periodic
+two-dimensional laser fields*. https://doi.org/10.5281/zenodo.21807953
+
+```bibtex
+@software{wisniewski_efsymmetry_2026,
+  author = {Wisniewski, Piotr},
+  title  = {EFsymmetry: symmetry detection for periodic
+            two-dimensional laser fields},
+  year   = {2026},
+  doi    = {10.5281/zenodo.21807953},
+  url    = {https://github.com/wisniewski-piotr/EFsymmetry}
+}
+```
+
 ### <u>Requirements:</u>
-### $\textbf{-NumPy}$
-### $\textbf{-Python 3.9}+$
+### $\mbox{-}\textbf{NumPy}$
+### $\mbox{-}\textbf{Python 3.9+}$
 
 ### <u>Installation:</u>
 #### In the terminal, inside your virtual environment:
@@ -20,7 +39,7 @@
 #
 ## <u>Description:</u>
 #### This Python module is intended to be used to detect electric (or vector potential) field symmetries, and was created with strong-field physics in mind.
-#### *Electric field has different symmetries to vector potential, by the way.
+#### Electric field has different symmetries to vector potential, by the way.
 #### The code can detect symmetries of any periodic field that is a combination of sine waves supplied to the programme.
 #### Upon detecting a symmetry, it can also be used to expand a set of points (e.g., of field extrema) beyond what's currently given, using the said field symmetries. 
 #### IMPORTANT: This symmetry-based approach is helpful, but it can't always detect all the extrema (or such points), and whether it can is conditional on the particular symmetry (and thus the shape of the field).
@@ -86,7 +105,7 @@ sym.test( sym.rotate( 2 * np.pi / 3 , sym.translate( cycle_period / 3 , sym.symi
 ```
 ##
 ## <u>Validation</u>
-#### For (ω,nω) counter-rotating bicircular field, the (n+1)-fold rotation followed by a cycle_period / (n+1) translation symmetry has been observed for fields where n = 2, 3, or 4.
+#### For an (ω,nω) counter-rotating bicircular field, the (n+1)-fold rotation followed by a cycle_period / (n+1) translation symmetry has been observed for fields where n = 2, 3, or 4.
 #### For those same fields, Claude derived the fact that there are 2(n+1) time-reflection axes at τ = mT/(2(n+1)), each carrying a field reflection with e^(2iα) = e^(2πim/(n+1)).
 #### All of those were verified by my code for n = 2, 3, and 4, for all values of m. Each of those fields also rejects the other two's reflection axes (correctly) - this is to mean that the field (ω,2ω) rejects the time-reflection axes of (ω,3ω) and (ω,4ω).
 #####
@@ -148,4 +167,83 @@ sym.invert( sym.syminput( sym.zero_crossings_locs ) ) ,
 sym.rotate( np.pi / 3 , sym.syminput( [ sym.cycle_period / 6 ] ) ) ]
 ```
 #### signifies a time reflection symmetry about extrema, anti-symmetry about zero-crossings, and a time reflection about the point in time equal sym.cycle_period / 6 followed by field rotation of np.pi/3 symmetry.
-#### IMPORTANT: sym.time_refl's sym_reflectlist can have any combination of any operators nested within it, granted none of those operators are themselves sym.time_refl. Nesting time reflection inside time reflection isn't supported (and is equivalent to translation).
+#### IMPORTANT: sym.time_refl's sym_reflectlist can have any combination of any operators nested within it, provided none of those operators are themselves sym.time_refl. Nesting time reflection inside time reflection isn't supported (and is equivalent to translation).
+##
+### <u>Internal Functions</u>
+#### `sym._EFCalc( t )` - calculates the field value in the x- and y-axes, in the form of a NumPy array, for the field defined using sym.add_wave, at time t, assuming no field rotations, field inversions, or field reflections were applied.
+#### `sym._CEFCalc( t )` - literally uses `sym._EFCalc( t )` internally, then converts from a NumPy array to a complex number.
+#### `sym._EFGrad( t )` - similar to `sym._EFCalc( t )`, except it calculates the field's gradient instead of its value/shape.
+#### `sym._set_ExCr( list1 , list2 )` - an internal function used inside sym.set_extrema_locs, sym.set_zero_crossings_locs, sym.set_window_centers_locs, and sym.set_base_window_definitions.
+#### list1 is initList, list2 is either sym.extrema_locs or sym.zero_crossings_locs (or equivalent).
+#### It automatically updates list2's values to be within `[ 0 , sym.cycle_period )` and removes duplicates. list1 can take the form of a NumPy array.
+#### `sym._ApplySymmetryOperators( nextlist , tlist_operators , blockReflection )` - Applies symmetry operators to nextlist, returns modified_tlist.
+#### tlist_operators is its operatorlist, nextlist is what it applies it to.
+#### blockReflection is a True/False boolean that's set to True by default, and if it's True, the function will believe it is being executed inside a sym.time_refl, and it will refuse to apply time reflection operators (because nesting time reflection inside another time reflection isn't supported). The version in sym.test() has blockReflection initially set to False, so time reflection can take place.
+#### `sym._ApplySymmetryOperatorsComp( nextlist , tlist_operators , blockReflection )` - same as above, except this function can receive complex time values (imaginary component in the fifth slot of each list inside nextlist, and it isn't currently acted upon by this function), and so it's used in sym.expand_complex.
+##
+## <u>Theoretical Background</u>
+### Checking for zero-crossings:
+```python
+success = 0
+for i in zero_crossings_locs: # for any value in this list
+    if abs( np.linalg.norm( _EFCalc( i ) ) ) < sym_tolerance: # check if the field magnitude is zero
+        success += 1 # if so, add 1 to 'success'
+if success != len( zero_crossings_locs ): # if all values were successful, zero crossings. Else: do the below
+    print("!!!  Incorrect Zero-crossings' Locations")
+    assert False # crash the programme
+```
+#### A simple method - check if the magnitude of the field equals zero. Nothing to add there.
+####
+### Checking for extrema:
+```python
+success = 0
+for i in extrema_locs: # for any value in this list
+    if abs( np.dot( _EFCalc( i ), _EFGrad( i ) ) / omega ) < sym_tolerance and abs( _CEFCalc( i ) ) > sym_tolerance: # check
+        success += 1 # if check for extrema was correct, add 1 to 'success'
+if success != len( extrema_locs ): # if all values were successful, there are only extrema in there. Else: do the below
+    print("!!!  Incorrect Extrema Locations")
+    assert False # crash the programme
+```
+#### I attribute this method of finding extrema to Claude. It relies on:
+#### $\frac{d}{dt}\left( |E|^2 \right) = 2 \dot{E} \cdot E$
+#### So, this expression is zero only if E (the field) is zero, or if the gradient of the magnitude of the field is zero (what we want).
+#### If field is zero, do not recognise it as correct; that's not an extremum - it's a zero-crossing.
+#### The `/ omega` factor is because field gradient is scaled by sym.omega, and this cancels the scaling out.
+#####
+### Time Reflection about τ
+#### After the reflection, `t -> 2τ-t`. Nothing else changes (with the exception of operators in sym_reflectlist, they need to be applied to the reflected points)
+#####
+### Checking whether a certain time is in our list
+#### If we reflect a certain time point and want to check whether it's already in our list:
+```python
+for n in sym_tlist:
+    if min( ( t[ 1 ] - n[ 1 ] ) % cycle_period , cycle_period - ( t[ 1 ] - n[ 1 ] ) % cycle_period ) < sym_tolerance:
+```
+#### t[ 1 ] and n[ 1 ] represent the second slot of each list inside nextlist, aka., they represent the times.
+#### t[ 1 ] is the reflected point, with any operators from sym_reflectlist already applied
+#### n[ 1 ] is any of the points already in the list
+#### The "% cycle_period" structure ensures the values are positive and between 0 and cycle_period, while the "min(...)" structure ensures that a value of t[ 1 ] like cycle_period-0.0000000001 and of n[ 1 ] like 0.0000000001 aren't treated as different values (the wraparound problem)
+#### It is essentially min( X % cycle_period , cycle_period - X % cycle_period )
+#####
+### Field Reflection
+#### The 4th slot (index 3) is ϕ pre-reflection.
+#### After field reflection about the axis you get when rotating the x-axis counter-clockwise by α (radians):
+#### `ϕ -> -ϕ + 2α` and field parity flips between 1 and -1.
+#####
+### sym.test() calculations
+#### For each point in the nextlist (each having a different index), find all points in the modified_tlist (the nextlist after you apply all the operators) with which it shares the index.
+#### For all those points:
+```python
+if j[ 0 ] == 1:  # if the field parity of modified_tlist is 1, so there were no (or an even number of) field reflections:
+    if abs( np.exp( 1j * j[ 3 ] ) * _CEFCalc( j[ 1 ] ) - _CEFCalc( i[ 1 ] ) ) < sym_tolerance:
+        success_working += 1
+elif j[ 0 ] == -1: # if the field parity is -1, so there was an odd number of field reflections:
+    if abs( np.exp( 1j * j[ 3 ] ) * np.conj( _CEFCalc( j[ 1 ] ) ) - _CEFCalc( i[ 1 ] ) ) < sym_tolerance:
+        success_working += 1
+```
+#### sym._CEFCalc( t ) is an internal function that calculates the field shape as a complex number from time t, for the field defined with add_wave(). It is similar to sym._EFCalc, which does the same thing but in the form of a numpy array.
+#### The `np.exp( 1j * j[ 3 ] )` bit at the start multiplies the complex form of the electric field shape by:
+#### $e^{i ϕ}$, where i is the imaginary constant and ϕ is the rotation angle. So, it rotates the field by ϕ radians.
+#### On the other hand, the `if` and `elif` test whether the field parity is 1 or -1.
+#### If the field was reflected an odd number of times, and thus the parity is -1, the complex field form must also be conjugated (aka., the field must be reflected about y=0).
+#### If all the points with the same index have the same field shape (the same values on both the x- and y-axis) then sym.test returns True.
