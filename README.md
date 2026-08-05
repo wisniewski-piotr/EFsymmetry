@@ -10,28 +10,27 @@ AI-Assisted coding (Claude). AI used primarily in an assistive role (spotting mi
 
 The decisions about the code's final state were independently reasoned by the author.
 
-## Citing
+## **How to Cite**
 
 If you use this module in published work, please cite it as:
 
-Wisniewski, P. (2026). *EFsymmetry: symmetry detection for periodic
-two-dimensional laser fields*. https://doi.org/10.5281/zenodo.21807953
+Wisniewski, P. (2026). *Symmetry detector for periodic two-dimensional laser fields*. https://doi.org/10.5281/zenodo.21807953
 
 ```bibtex
 @software{wisniewski_efsymmetry_2026,
   author = {Wisniewski, Piotr},
-  title  = {EFsymmetry: symmetry detection for periodic
-            two-dimensional laser fields},
+  title  = {Symmetry detector for periodic two-dimensional laser fields},
   year   = {2026},
   doi    = {10.5281/zenodo.21807953},
   url    = {https://github.com/wisniewski-piotr/EFsymmetry}
 }
 ```
+## **Setup**
 
 ### <u>Requirements:</u>
-**- NumPy**
+- NumPy
 
-**- Python 3.9+**
+- Python 3.9+
 
 ### <u>Installation:</u>
 In the terminal, inside your virtual environment:
@@ -47,7 +46,7 @@ In the terminal, inside your virtual environment:
 
 **`pip uninstall EFsymmetry`**
 
-## <u>Description:</u>
+## **<u>Description:</u>**
 This Python module is intended to be used to detect electric (or vector potential) field symmetries, and was created with strong-field physics in mind.
 
 <u>Note:</u> The electric field has different symmetries to vector potential.
@@ -58,16 +57,16 @@ Upon detecting a symmetry, it can also be used to expand a set of points (e.g., 
 
 **IMPORTANT:** This symmetry-based approach is helpful, but it can't always detect all the extrema (or such points), and whether it can is conditional on the particular symmetry (and thus the shape of the field).
 
-## <u>Current Limitations:</u>
+## **<u>Current Limitations:</u>**
 - The code can only accept commensurate (periodic) fields
 
 - The code can only reflect real times (not complex saddle times) about the said symmetries
 
 - Given windowed parametrisation for a PINN, window widths are a placeholder and not able to be calculated by this code.
 
-## Code
+## **Code**
 
-### BEFORE YOU START:
+### **BEFORE YOU START:**
 
 **Step 1:**
 
@@ -83,7 +82,7 @@ Use either `sym.set_cycle_period( cycle_period )` or `sym.set_omega( omega )` to
 
 sym.add_wave will only accept integer values of s1 and s2, so that the field is commensurate (meaning it is periodic with a cycle period of sym.cycle_period). E.g., for a 3:2 ratio of s1 and s2, set s1 = 3 and s2 = 2, and adjust the cycle period accordingly.
 
-## <u>Functions</u>
+## **<u>Functions</u>**
 
 #### `sym.set_extrema_locs( list )`
 sets this list to be sym.extrema_locs, which is then automatically tested for containing ONLY locations of field extrema for times from 0 to sym.cycle_period. It will flag errors down to 1e-8.
@@ -122,7 +121,7 @@ verifies the symmetry supplied in inputlist, and then uses it to find more point
 #### `sym.ex_cr( inputlist )`
 does the above automatically, using sym.extrema_locs and sym.zero_crossings_locs as inputs.
 
-### For a PINN with windowed parametrisation:
+### **For a PINN with windowed parametrisation:**
 
 #### `sym.set_window_centers_locs( list )`
 sets the locations of window centers (fills sym.window_centers_locs and sym.base_window_definitions).
@@ -138,7 +137,7 @@ uses sym.expand to expand the list of window centers.
 **!!! ATTENTION:** The above commands do NOT keep window center widths unchanged.
 They are all set to `cycle_period / (2 * number_of_window_centers)`
 
-### Additional Functions
+### **Additional Functions**
 
 #### `sym.set_sym_tolerance( tol )`
 sets the tolerance used in all symmetry-related calculations (default: 1e-8)
@@ -146,7 +145,7 @@ sets the tolerance used in all symmetry-related calculations (default: 1e-8)
 #### `sym.expand_complex( initList , inputlist )`
 the same thing as sym.expand, except this one takes in imaginary values but doesn't change them throughout the calculations. It is a first step towards making the code able to expand complex-time saddle lists.
 
-## <u>Example:</u>
+## **<u>Example:</u>**
 ```python
 import numpy as np
 from piotr import symmetry as sym
@@ -162,7 +161,7 @@ sym.test( sym.rotate( 2 * np.pi / 3 , sym.translate( cycle_period / 3 , sym.symi
 # returns True, as this is a trefoil.
 ```
 
-## <u>Validation</u>
+## **<u>Validation</u>**
 For an (ω,nω) counter-rotating bicircular field, the (n+1)-fold rotation followed by a cycle_period / (n+1) translation symmetry has been observed for fields where n = 2, 3, or 4.
 
 For those same fields, Claude derived the fact that there are 2(n+1) time-reflection axes at τ = mT/(2(n+1)), each carrying a field reflection with e^(2iα) = e^(2πim/(n+1)).
@@ -171,7 +170,7 @@ All of those were verified by my code for n = 2, 3, and 4, for all values of m. 
 
 To check the code is running correctly, you can download and run the check.py file inside this repository to verify that everything works fine (it will verify (ω,nω) fields for n = 2, 3, and 4, as well as do an integer harmonics check, as of the version dated August 4th 2026).
 
-## <u>Technical Explanations:</u>
+## **<u>Technical Explanations:</u>**
 **This section is mainly for people curious about the specifics of how the code works, or for those who want to edit it.**
 
 #### sym.syminput()
@@ -252,7 +251,7 @@ The operators are continually applied (and results are saved) until the list no 
 #### sym.expand_complex
 sym.expand_complex adds the complex component to a fifth slot in each list nested inside of nextlist, and simply passes that fifth slot through.
 
-### <u>Internal Functions</u>
+### **<u>Internal Functions</u>**
 
 #### `sym._EFCalc( t )`
 calculates the field value in the x- and y-axes, in the form of a NumPy array, for the field defined using sym.add_wave, at time t, assuming no field rotations, field inversions, or field reflections were applied.
@@ -280,9 +279,9 @@ blockReflection is a True/False boolean that's set to True by default, and if it
 #### `sym._ApplySymmetryOperatorsComp( nextlist , tlist_operators , blockReflection )`
 same as above, except this function can receive complex time values (imaginary component in the fifth slot of each list inside nextlist, and it isn't currently acted upon by this function), and so it's used in sym.expand_complex.
 
-## <u>Theoretical Background</u>
+## **<u>Theoretical Background</u>**
 
-### Checking for zero-crossings:
+### Checking for Zero-Crossings:
 ```python
 success = 0
 for i in zero_crossings_locs: # for any value in this list
@@ -294,7 +293,7 @@ if success != len( zero_crossings_locs ): # if all values were successful, zero 
 ```
 A simple method - check if the magnitude of the field equals zero. Nothing to add there.
 
-### Checking for extrema:
+### Checking for Extrema:
 ```python
 success = 0
 for i in extrema_locs: # for any value in this list
@@ -317,7 +316,7 @@ The `/ omega` factor is because field gradient is scaled by sym.omega, and this 
 ### Time Reflection about τ
 After the reflection, `t -> 2τ-t`. Nothing else changes (with the exception of operators in sym_reflectlist, they need to be applied to the reflected points)
 
-### Checking whether a certain time is in our list
+### Checking whether a certain point in time is on a nextlist
 
 If we reflect a certain time point and want to check whether it's already in our list:
 ```python
@@ -342,7 +341,7 @@ After field reflection about the axis you get when rotating the x-axis counter-c
 
 `ϕ -> -ϕ + 2α` and field parity flips between 1 and -1.
 
-### sym.test() calculations
+### sym.test() Calculations
 
 For each point in the nextlist (each having a different index), find all points in the modified_tlist (the nextlist after you apply all the operators) with which it shares the index.
 
