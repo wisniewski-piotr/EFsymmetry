@@ -362,3 +362,18 @@ On the other hand, the `if` and `elif` test whether the field parity is 1 or -1.
 If the field was reflected an odd number of times, and thus the parity is -1, the complex field form must also be conjugated (aka., the field must be reflected about y=0).
 
 If all the points with the same index have the same field shape (the same values on both the x- and y-axis) then sym.test returns True.
+
+## <u>Contributions</u>
+
+Contributions are welcome - feel free to open a pull request.
+
+<u>Areas that would be particularly useful if added:</u>
+
+- **Complex-time saddle expansion.** `sym.expand_complex` currently carries the
+  imaginary part through untouched. Establishing the correct transformation
+  (see Rook & Faria, *J. Phys. B* **55** 165601 (2022), Sec. 3.2) would let the
+  module transport saddle times as well as real ones.
+- **Window widths.** Currently a geometric placeholder, `cycle_period / (2N)`.
+- **Incommensurate field support.** Few-cycle pulses would be especially useful.
+
+Please accompany code changes with documentation, update the README where appropriate, and make sure the `check.py` file still runs fine. For questions, bugs, or suggestions, open an issue on GitHub.
