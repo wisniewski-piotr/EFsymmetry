@@ -342,13 +342,13 @@ After field reflection about the axis you get when rotating the x-axis counter-c
 
 Now, where does this actually come from?
 
-**1)** Imagine an x-y plane, where we reflect the arrow pointing in the x-direction ( ϕ = 0 ) from the origin about the axis you get by rotating the x-axis counter-clockwise by α. You will necessarily get the reflection rotating counter-clockwise by 2α. Hence, the 2α factor.
+Let's take an x-y plane (our field) and plot an arrow pointing in the x-direction (the field at one point in time).
 
-**2)** Now imagine an x-y plane, where we reflect the arrow rotated counter-clockwise by ϕ from the x-axis, about the x-axis ( α = 0 ). You will now necessarily see that the reflection is rotated clockwise from the x-axis by ϕ. Hence, the -ϕ factor.
+**1)** Imagine we reflect the arrow, still pointing in the x-direction ( ϕ = 0, as not rotated ), about the axis you get by rotating the x-axis counter-clockwise by α. You will get the reflection rotated counter-clockwise by 2α. Hence, the 2α factor.
 
-**3)** Now imagine an x-y plane, with a full field shape ( not rotated, so ϕ = 0 ) in time, where the y > 0 part of the field looks different to the y < 0 part. Let's reflect that about the x-axis ( α = 0 ). We now see that whatever field shape we had, it is now a mirror reflection about the x-axis. Thus, we have to reflect the field about the x-axis in addition to `ϕ -> -ϕ + 2α`.
+**2)** Now imagine we reflect the arrow, rotated counter-clockwise by ϕ from the x-axis, about the x-axis ( α = 0 ). You will now necessarily see that the reflection is rotated clockwise from the x-axis by ϕ. Hence, the -ϕ factor.
 
-**Clarification:** points 1) and 2) describe a single arrow's (or a single point in time's field's) direction. The whole trajectory also has a handedness, which rotation cannot account for, which is why field parity is tracked separately from the rotation angle of any single point.
+**3)** Now imagine a full field shape ( not rotated, so ϕ = 0; ϕ tracks rotation operators, not which way the arrow points ) over the cycle period, where the y > 0 part of the field looks different to the y < 0 part ( on the x-y plane ). Let's reflect that about the x-axis ( α = 0 ). We now see that whatever field shape we had, it is now a mirror reflection about the x-axis. Thus, we have to reflect the field about the x-axis in addition to `ϕ -> -ϕ + 2α`.
 
 ### sym.test() Calculations
 
