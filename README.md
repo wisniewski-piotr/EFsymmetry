@@ -13,11 +13,11 @@ The decisions about the code's final state were independently reasoned by the au
 
 If you use this module in published work, please cite it as:
 
-Wisniewski, P. (2026). *Symmetry detector for periodic two-dimensional laser fields*. https://doi.org/10.5281/zenodo.21807953
+Wisniewski, P., & Figueira de Morisson Faria, C. (2026). *Symmetry detector for periodic two-dimensional laser fields*. https://doi.org/10.5281/zenodo.21807953
 
 ```bibtex
 @software{wisniewski_efsymmetry_2026,
-  author = {Wisniewski, Piotr},
+  author = {Wisniewski, Piotr and Figueira de Morisson Faria, Carla},
   title  = {Symmetry detector for periodic two-dimensional laser fields},
   year   = {2026},
   doi    = {10.5281/zenodo.21807953},
