@@ -1,4 +1,5 @@
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21807953.svg)](https://doi.org/10.5281/zenodo.21807953)
+https://doi.org/10.5281/zenodo.21807953
 # Symmetry Detector
 
 <u>Author:</u> Piotr Wisniewski, 2026 (studying at UCL at this time)
