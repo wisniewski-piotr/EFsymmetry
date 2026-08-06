@@ -1,17 +1,21 @@
-cff-version: 1.2.1
+cff-version: 1.2.2
 message: "If you use this software, please cite it as below."
 title: "Symmetry detector for periodic two-dimensional laser fields"
 authors:
   - family-names: Wisniewski
     given-names: Piotr
+    orcid: "https://orcid.org/0009-0006-8698-3547"
   - family-names: Chen
     given-names: Jiakang
+    orcid: "https://orcid.org/0009-0002-3458-0560"
   - family-names: Hashim
     given-names: Sufia
+    orcid: "https://orcid.org/0009-0002-3448-5424"
   - family-names: "Figueira de Morisson Faria"
     given-names: Carla
+    orcid: "https://orcid.org/0000-0001-8397-4529"
 doi: 10.5281/zenodo.21807953
 license: MIT
 repository-code: "https://github.com/wisniewski-piotr/EFsymmetry"
-version: 0.2.1
+version: 0.2.2
 date-released: 2026-08-06

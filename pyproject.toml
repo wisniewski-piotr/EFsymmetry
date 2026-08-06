@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 license = "MIT"
 name = "EFsymmetry"
-version = "0.2.1"
+version = "0.2.2"
 description = "Symmetry detection and ionization-window generation for tailored laser fields"
 readme = "README.md"
 requires-python = ">=3.9"
