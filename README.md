@@ -340,6 +340,14 @@ After field reflection about the axis you get when rotating the x-axis counter-c
 
 `ϕ -> -ϕ + 2α` and field parity flips between 1 and -1.
 
+Now, where does this actually come from?
+
+**1)** Imagine an x-y plane, where we reflect the arrow pointing in the x-direction ( ϕ = 0 ) from the origin about the axis you get by rotating the x-axis counter-clockwise by α. You will necessarily get the reflection rotating counter-clockwise by 2α. Hence, the 2α factor.
+
+**2)** Now imagine an x-y plane, where we reflect the arrow rotated counter-clockwise by ϕ from the x-axis, about the x-axis ( α = 0 ). You will now necessarily see that the reflection is rotate clockwise from the x-axis by ϕ. Hence, the -ϕ factor.
+
+**3)** Now imagine an x-y plane, with a full field shape in time, where the y > 0 part of the field looks different to the y < 0 part. Let's reflect that about the x-axis ( α = 0 ). We now see that whatever field shape we had, it is now a mirror reflection about the x-axis. Thus, we have to reflect the field about x = 0 in addition to `ϕ -> -ϕ + 2α`.
+
 ### sym.test() Calculations
 
 For each point in the nextlist (each having a different index), find all points in the modified_tlist (the nextlist after you apply all the operators) with which it shares the index.
@@ -359,7 +367,7 @@ The `np.exp( 1j * j[ 3 ] )` bit at the start multiplies the complex form of the 
 
 On the other hand, the `if` and `elif` test whether the field parity is 1 or -1.
 
-If the field was reflected an odd number of times, and thus the parity is -1, the complex field form must also be conjugated (aka., the field must be reflected about y=0).
+If the field was reflected an odd number of times, and thus the parity is -1, the complex field form must also be conjugated (aka., the field must be reflected about x = 0).
 
 If all the points with the same index have the same field shape (the same values on both the x- and y-axis) then sym.test returns True.
 
@@ -371,6 +379,6 @@ Contributions are welcome - feel free to open a pull request.
 
 - **Complex-time saddle expansion.** `sym.expand_complex` currently doesn't change the imaginary component. Adding support for expanding complex-time saddles would prove useful (see Rook & Faria, *J. Phys. B* **55** 165601 (2022), Sec. 3.2).
 - **Window widths.** Currently always set to `cycle_period / (2N)`.
-- **Incommensurate field support.** Few-cycle pulse support.
+- **Non-periodic field support.** Few-cycle pulse support.
 
 Please accompany code changes with documentation, update the README where appropriate, and make sure the `check.py` file still runs fine. For questions, bugs, or suggestions, open an issue on GitHub.
