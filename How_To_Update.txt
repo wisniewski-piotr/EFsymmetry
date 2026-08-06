@@ -1,0 +1,4 @@
+1) Update the version in pyproject.toml
+2) Update the date and version in CITATION.cff (and the authors, if new ones arrived)
+3) Run "python check.py" to confirm the code works
+4) Update via "git push"
