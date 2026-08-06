@@ -348,7 +348,7 @@ Now, where does this actually come from?
 
 **3)** Now imagine an x-y plane, with a full field shape ( not rotated, so ϕ = 0 ) in time, where the y > 0 part of the field looks different to the y < 0 part. Let's reflect that about the x-axis ( α = 0 ). We now see that whatever field shape we had, it is now a mirror reflection about the x-axis. Thus, we have to reflect the field about the x-axis in addition to `ϕ -> -ϕ + 2α`.
 
-**Clairfication:** points 1) and 2) describe a single arrow's (or a single point in time's field's) direction; a whole trajectory also has a handedness, which rotation cannot account for, which is why field parity is tracked separately from the rotation angle of any single point).
+**Clarification:** points 1) and 2) describe a single arrow's (or a single point in time's field's) direction. The whole trajectory also has a handedness, which rotation cannot account for, which is why field parity is tracked separately from the rotation angle of any single point.
 
 ### sym.test() Calculations
 
