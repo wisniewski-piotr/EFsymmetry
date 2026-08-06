@@ -346,7 +346,7 @@ Now, where does this actually come from?
 
 **2)** Now imagine an x-y plane, where we reflect the arrow rotated counter-clockwise by ϕ from the x-axis, about the x-axis ( α = 0 ). You will now necessarily see that the reflection is rotate clockwise from the x-axis by ϕ. Hence, the -ϕ factor.
 
-**3)** Now imagine an x-y plane, with a full field shape in time, where the y > 0 part of the field looks different to the y < 0 part. Let's reflect that about the x-axis ( α = 0 ). We now see that whatever field shape we had, it is now a mirror reflection about the x-axis. Thus, we have to reflect the field about x = 0 in addition to `ϕ -> -ϕ + 2α`.
+**3)** Now imagine an x-y plane, with a full field shape in time, where the y > 0 part of the field looks different to the y < 0 part. Let's reflect that about the x-axis ( α = 0 ). We now see that whatever field shape we had, it is now a mirror reflection about the x-axis. Thus, we have to reflect the field about the x-axis in addition to `ϕ -> -ϕ + 2α`.
 
 ### sym.test() Calculations
 
@@ -367,7 +367,7 @@ The `np.exp( 1j * j[ 3 ] )` bit at the start multiplies the complex form of the 
 
 On the other hand, the `if` and `elif` test whether the field parity is 1 or -1.
 
-If the field was reflected an odd number of times, and thus the parity is -1, the complex field form must also be conjugated (aka., the field must be reflected about x = 0).
+If the field was reflected an odd number of times, and thus the parity is -1, the complex field form must also be conjugated (aka., the field must be reflected about the x-axis).
 
 If all the points with the same index have the same field shape (the same values on both the x- and y-axis) then sym.test returns True.
 
