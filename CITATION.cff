@@ -1,4 +1,4 @@
-cff-version: 1.2.2
+cff-version: 1.3.0
 message: "If you use this software, please cite it as below."
 title: "Symmetry detector for periodic two-dimensional laser fields"
 authors:
@@ -17,5 +17,5 @@ authors:
 doi: 10.5281/zenodo.21807953
 license: MIT
 repository-code: "https://github.com/wisniewski-piotr/EFsymmetry"
-version: 0.2.2
-date-released: 2026-08-06
+version: 1.0.0
+date-released: 2026-08-07
