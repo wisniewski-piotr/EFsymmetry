@@ -345,6 +345,8 @@ Now, where does this actually come from?
 
 Let's take an x-y plane (our field) and plot an arrow pointing in the x-direction (the field at one point in time).
 
+In the illustrations below, the arrow is green, while its reflection and the axis of reflection are red.
+
 **1)** Imagine we reflect the arrow, still pointing in the x-direction ( ϕ = 0, as not rotated ), about the axis you get by rotating the x-axis counter-clockwise by α. You will get the reflection rotated counter-clockwise by 2α. Hence, the 2α factor.
 
 <img src="Figures/Fig1.png" alt="field_refl Expl. 1" width="450">
