@@ -355,7 +355,9 @@ In the illustrations below, the arrow is green, while its reflection and the axi
 
 <img src="Figures/Fig2.png" alt="field_refl Expl. 2" width="450">
 
-**3)** Now imagine a full field shape ( not rotated, so ϕ = 0; ϕ tracks rotation operators, not which way the arrow points ) over the cycle period, where the y > 0 part of the field looks different to the y < 0 part ( on the x-y plane ). Let's reflect that about the x-axis ( α = 0 ). We now see that whatever field shape we had, it is now a mirror reflection about the x-axis. Thus, we have to reflect the field about the x-axis in addition to `ϕ -> -ϕ + 2α`.
+**3)** Now imagine a full field shape ( not rotated, so ϕ = 0; ϕ tracks rotation operators, not which way the arrow points ) over the cycle period, where the y > 0 part of the field looks different to the y < 0 part ( on the x-y plane ). Let's reflect that about the x-axis ( α = 0 ). 
+
+We now see that whatever field shape we had, it is now a mirror reflection about the x-axis. Thus, we have to reflect the field about the x-axis in addition to `ϕ -> -ϕ + 2α`. This reflection is stored as the field parity.
 
 <img src="Figures/Fig3.png" alt="field_refl Expl. 3" width="450">
 
