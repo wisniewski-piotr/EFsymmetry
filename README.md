@@ -18,8 +18,7 @@ Wisniewski, P., Chen, J., Hashim, S., & Figueira de Morisson Faria, C. (2026). *
 
 ```bibtex
 @software{wisniewski_efsymmetry_2026,
-  author = {Wisniewski, Piotr and Chen, Jiakang and Hashim, Sufia
-            and Figueira de Morisson Faria, Carla},
+  author = {Wisniewski, Piotr and Chen, Jiakang and Hashim, Sufia and Figueira de Morisson Faria, Carla},
   title  = {Symmetry detector for periodic two-dimensional laser fields},
   year   = {2026},
   doi    = {10.5281/zenodo.21807953},
@@ -348,9 +347,15 @@ Let's take an x-y plane (our field) and plot an arrow pointing in the x-directio
 
 **1)** Imagine we reflect the arrow, still pointing in the x-direction ( ϕ = 0, as not rotated ), about the axis you get by rotating the x-axis counter-clockwise by α. You will get the reflection rotated counter-clockwise by 2α. Hence, the 2α factor.
 
+<img src="Figures/Fig1.png" alt="field_refl Expl. 1" width="450">
+
 **2)** Now imagine we reflect the arrow, rotated counter-clockwise by ϕ from the x-axis, about the x-axis ( α = 0 ). You will now necessarily see that the reflection is rotated clockwise from the x-axis by ϕ. Hence, the -ϕ factor.
 
+<img src="Figures/Fig2.png" alt="field_refl Expl. 2" width="450">
+
 **3)** Now imagine a full field shape ( not rotated, so ϕ = 0; ϕ tracks rotation operators, not which way the arrow points ) over the cycle period, where the y > 0 part of the field looks different to the y < 0 part ( on the x-y plane ). Let's reflect that about the x-axis ( α = 0 ). We now see that whatever field shape we had, it is now a mirror reflection about the x-axis. Thus, we have to reflect the field about the x-axis in addition to `ϕ -> -ϕ + 2α`.
+
+<img src="Figures/Fig3.png" alt="field_refl Expl. 3" width="450">
 
 ### sym.test() Calculations
 
